@@ -151,11 +151,30 @@ header{
 nav{display:flex; align-items:center; gap:18px}
 .nav-link{padding:10px 0; font-weight:500}
 .spacer{flex:1}
-.mobile-toggle{display:inline-flex; padding:10px; border-radius:8px; border:1px solid var(--hair)}
-.nav-menu{display:none}
+.mobile-toggle{
+  display:inline-flex; padding:10px; border-radius:8px; border:1px solid var(--hair);
+  background:transparent; cursor:pointer; font-family:inherit;
+}
+.nav-menu{
+  display:none;
+  position:absolute; top:100%; left:0; right:0;
+  background:rgba(255,255,255,.98); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--hair);
+  flex-direction:column; padding:12px 20px;
+}
+.nav-menu.active{display:flex}
+.nav-menu .nav-link{padding:12px 0; border-bottom:1px solid var(--hair)}
+.nav-menu .nav-link:last-of-type{border-bottom:none}
+.nav-menu .btn{width:100%; margin-top:8px}
+
 @media (min-width: 860px){
   .mobile-toggle{display:none}
-  .nav-menu{display:flex}
+  .nav-menu{
+    display:flex !important; position:static; flex-direction:row;
+    border-bottom:none; padding:0; background:transparent;
+  }
+  .nav-menu .nav-link{border-bottom:none}
+  .nav-menu .btn{width:auto; margin-top:0}
 }
 
 /* =========================
@@ -167,12 +186,17 @@ nav{display:flex; align-items:center; gap:18px}
   background:linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
 }
 .hero .inner{
-  min-height:78vh; display:grid; align-items:center; padding:56px 0;
+  min-height:78vh; display:grid; align-items:center; padding:40px 0;
 }
 .hero-grid{
   display:grid; gap:28px;
   grid-template-columns:1fr; align-items:center;
 }
+
+@media (min-width:640px){
+  .hero .inner{padding:56px 0}
+}
+
 @media (min-width:980px){
   .hero-grid{ grid-template-columns: 1.1fr .9fr; gap:42px }
 }
@@ -210,6 +234,11 @@ nav{display:flex; align-items:center; gap:18px}
 
 .hero-sub{ margin-top:18px; font-size:var(--lead); max-width:720px; color:#2b2b2b }
 .hero-ctas{ display:flex; gap:12px; margin-top:26px; flex-wrap:wrap }
+
+@media (max-width:480px){
+  .hero-ctas{flex-direction:column}
+  .hero-ctas .btn{width:100%; justify-content:center}
+}
 
 /* Subtle parallax background */
 .hero-media{
@@ -257,7 +286,7 @@ nav{display:flex; align-items:center; gap:18px}
 /* =========================
    Credo / Proof
 ========================== */
-.credo{ padding:56px 0 }
+.credo{ padding:40px 0 }
 .credo .wrap{ display:grid; gap:22px }
 .credo h2{
   font-family:"Libre Baskerville", Georgia, serif; font-size:var(--h2);
@@ -265,13 +294,21 @@ nav{display:flex; align-items:center; gap:18px}
 }
 .credo p{ margin:0; max-width:58ch }
 
+@media (min-width:640px){
+  .credo{ padding:56px 0 }
+}
+
 /* =========================
    Pricing
 ========================== */
 .pricing{
-  padding:56px 0;
+  padding:40px 0;
   background: linear-gradient(135deg, #f8fbff 0%, #ffffff 50%, #f4f7fb 100%);
   position: relative;
+}
+
+@media (min-width:640px){
+  .pricing{ padding:56px 0 }
 }
 .pricing::before{
   content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -284,10 +321,23 @@ nav{display:flex; align-items:center; gap:18px}
   margin-top: 28px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .pricing-grid {
+    gap: 20px;
+  }
 }
 
 @media (min-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
   .pricing-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
@@ -375,15 +425,28 @@ nav{display:flex; align-items:center; gap:18px}
 }
 
 .badge {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.75rem;
+  position: relative;
+  right: auto;
+  top: auto;
+  transform: none;
+  font-size: 0.7rem;
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 12px;
-  margin-right: 80px;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .badge {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    margin-right: 80px;
+    margin-left: 0;
+  }
 }
 
 .price-row.highlight .badge {
@@ -407,7 +470,11 @@ nav{display:flex; align-items:center; gap:18px}
 /* =========================
    Location & Approach
 ========================== */
-.approach{ padding:56px 0 }
+.approach{ padding:40px 0 }
+
+@media (min-width:640px){
+  .approach{ padding:56px 0 }
+}
 .stamp{
   display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
   border:1px dashed #9ed6ff; background:linear-gradient(180deg,#f8fdff, #ffffff);
@@ -422,7 +489,11 @@ nav{display:flex; align-items:center; gap:18px}
 /* =========================
    Contact
 ========================== */
-.contact{ padding:56px 0; border-top:1px solid var(--hair) }
+.contact{ padding:40px 0; border-top:1px solid var(--hair) }
+
+@media (min-width:640px){
+  .contact{ padding:56px 0 }
+}
 form{
   display:grid; gap:12px; max-width:560px;
 }
@@ -460,4 +531,35 @@ footer{ padding:32px 0; border-top:1px solid var(--hair); color:#495057 }
 /* Better focus indicators */
 a:focus, button:focus, input:focus, textarea:focus{
   outline:2px solid var(--green); outline-offset:2px;
+}
+
+/* =========================
+   Mobile Optimizations
+========================== */
+@media (max-width:640px){
+  .wrap{padding-inline:16px}
+
+  .hero-card{max-width:100%}
+
+  .headline em{
+    -webkit-text-stroke: 1px rgba(0,0,0,0.3);
+    font-size: 0.95em;
+  }
+
+  .pricing-header{padding:16px 20px 12px}
+  .pricing-options{padding:4px}
+  .price-row{padding:14px 12px; font-size:0.9rem}
+  .price{font-size:1rem}
+
+  .btn{font-size:0.95rem; padding:.85rem 1.1rem}
+
+  .inline{flex-direction:column}
+  .inline .btn{width:100%}
+}
+
+@media (max-width:480px){
+  .brand{font-size:1rem}
+  .tag{font-size:0.72rem; padding:0.3rem 0.6rem}
+
+  .price-row span:first-child{font-size:0.88rem}
 }

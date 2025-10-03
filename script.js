@@ -1,19 +1,51 @@
 // Year stamp
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Typewriter animation for "confident"
+const typewriter = document.getElementById('typewriter');
+if (typewriter) {
+  const text = 'confident';
+  let index = 0;
+
+  const type = () => {
+    if (index < text.length) {
+      typewriter.textContent += text.charAt(index);
+      index++;
+      setTimeout(type, 150); // 150ms delay between characters
+    }
+  };
+
+  // Start typing after a brief delay
+  setTimeout(type, 800);
+}
+
 // Mobile menu
 const toggle = document.getElementById('mobileToggle');
 const nav = document.getElementById('nav');
-if (toggle) {
+if (toggle && nav) {
   toggle.addEventListener('click', () => {
-    const open = nav.style.display === 'flex';
-    nav.style.display = open ? 'none' : 'flex';
-    toggle.setAttribute('aria-expanded', String(!open));
+    const isOpen = nav.classList.contains('active');
+    nav.classList.toggle('active');
+    toggle.setAttribute('aria-expanded', String(!isOpen));
   });
+
+  // Close menu when clicking on a nav link
+  nav.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Handle window resize
   const mq = window.matchMedia('(min-width: 860px)');
-  const sync = () => { nav.style.display = mq.matches ? 'flex' : 'none'; toggle.setAttribute('aria-expanded','false'); };
+  const sync = () => {
+    if (mq.matches) {
+      nav.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  };
   mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
-  sync();
 }
 
 // Hero micro-parallax (motion-safe)
@@ -35,33 +67,3 @@ const io = new IntersectionObserver((entries) => {
 }, {threshold:0.12});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// Contact: mailto fallback with validation
-const form = document.getElementById('contactForm');
-const note = document.getElementById('formNote');
-if (form) {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const name = data.get('name')?.toString().trim();
-    const email = data.get('email')?.toString().trim();
-    const phone = data.get('phone')?.toString().trim();
-    const message = data.get('message')?.toString().trim();
-
-    if (!name || !email) {
-      note.textContent = 'Please include at least your name and email.';
-      note.style.color = '#b91c1c';
-      return;
-    }
-    const subject = encodeURIComponent('Training Enquiry');
-    const body = encodeURIComponent(
-`Name: ${name}
-Email: ${email}
-Phone: ${phone || '-'}
-—
-${message || 'Hi Jay, I would like to book a consultation to get started with training.'}`
-    );
-    window.location.href = `mailto:enquiries@jaydoesphysiques.com?subject=${subject}&body=${body}`;
-    note.textContent = 'Opening your email client…';
-    note.style.color = '#166534';
-  });
-}
