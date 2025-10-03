@@ -54,6 +54,7 @@ a{color:inherit; text-decoration:none}
 .btn:active{transform:translateY(1px)}
 .btn-primary{ background:var(--green); color:white; z-index: 2; position: relative; }
 .btn-primary:hover{ background:var(--green-dark) }
+.btn-compact{ padding:.6rem .9rem; font-size:.9rem }
 
 /* Subtle Gradient Border Effect */
 .btn-hero-special{
