@@ -210,43 +210,18 @@ nav{display:flex; align-items:center; gap:18px}
 /* ENHANCED VISIBILITY for the masked word */
 .headline em{
   font-family:inherit; font-style:italic; font-weight:700;
-  color: var(--ink);
-  display:inline-block; position:relative; transform:translateY(6px);
-  transition: all 0.3s ease;
-  min-height: 1.2em;
-  vertical-align: baseline;
-}
-
-/* Apply image mask only when text is present */
-.headline em:not(:empty){
   background-image:
     linear-gradient(135deg, rgba(0,0,0,.4), rgba(0,0,0,.2)),
     url('jay-profile.jpg');
   background-size: cover; background-position: 50% 45%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  display:inline-block; position:relative; transform:translateY(6px);
   -webkit-text-stroke: 1.5px rgba(0,0,0,0.4);
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   filter: contrast(1.2) saturate(1.1);
   animation: pan 20s ease-in-out infinite alternate;
+  transition: all 0.3s ease;
 }
-
-.headline em.typing::after{
-  content: '|';
-  color: var(--ink);
-  -webkit-text-stroke: 0;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  background: none;
-  animation: blink 0.8s step-end infinite;
-  margin-left: 2px;
-  filter: none;
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
 .headline em:hover{
   filter: contrast(1.3) saturate(1.2) brightness(1.1);
   transform: translateY(4px) scale(1.02);

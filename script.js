@@ -1,32 +1,6 @@
 // Year stamp
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Typewriter animation for "confident"
-const typewriter = document.getElementById('typewriter');
-if (typewriter) {
-  const text = 'confident';
-  let index = 0;
-
-  // Add typing class for cursor
-  typewriter.classList.add('typing');
-
-  const type = () => {
-    if (index < text.length) {
-      typewriter.textContent += text.charAt(index);
-      index++;
-      setTimeout(type, 150); // 150ms delay between characters
-    } else {
-      // Remove cursor after typing is complete
-      setTimeout(() => {
-        typewriter.classList.remove('typing');
-      }, 500);
-    }
-  };
-
-  // Start typing after a brief delay
-  setTimeout(type, 800);
-}
-
 // Mobile menu
 const toggle = document.getElementById('mobileToggle');
 const nav = document.getElementById('nav');
